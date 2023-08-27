@@ -1,0 +1,6 @@
+{
+  "$schema": "https://aka.ms/bicep-registry-module-metadata-file-schema-v2#",
+  "name": "ASB Verified Bicep Module - Storage Account",
+  "summary": "This module deploys a standardised Azure Storage Account that aligns with ASB's security requirements.",
+  "owner": "ASB Bank"
+}
