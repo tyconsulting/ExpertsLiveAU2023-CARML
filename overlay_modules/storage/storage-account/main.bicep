@@ -274,7 +274,7 @@ resource peVnet 'microsoft.network/virtualNetworks@2022-07-01' existing = {
   }
 }
 module standardStorageAccount '../../../carml_modules/storage/storage-account/main.bicep' = {
-  name: take('ASBStorage-${name}', 64)
+  name: take('StdStorage-${name}', 64)
   dependsOn: []
   params: {
     name: name
