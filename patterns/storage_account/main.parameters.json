@@ -9,7 +9,7 @@
       }
     },
     "resourceGroupName": {
-      "value": "rg-ae-el-carml-01"
+      "value": "rg-ae-el-carml-demo-01"
     },
     "storageAccountName": {
       "value": "saaetaoelcarml01"
