@@ -1,4 +1,4 @@
-# ASB Verified Bicep Module - Storage Account `[Microsoft.Storage/storageAccounts]`
+# Overlay Bicep Module - Storage Account `[Microsoft.Storage/storageAccounts]`
 
 This module deploys a standardised Azure Storage Account that aligns with ASB's security requirements.
 

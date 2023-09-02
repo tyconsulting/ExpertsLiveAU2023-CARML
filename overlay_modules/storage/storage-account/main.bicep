@@ -162,7 +162,7 @@ param userAssignedIdentities array = []
 var moduleVersion = loadJsonContent('./version.json').version
 
 var mergedTags = union(tags, {
-    'hidden-module_name': 'storage/storage-accounts'
+    'hidden-module_name': 'storage/storage-account'
     'hidden-module_version': moduleVersion
   })
 
