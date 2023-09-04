@@ -1,6 +1,6 @@
 # Overlay Bicep Module - Key Vaults `[Microsoft.KeyVault/vaults]`
 
-This module deploys a standardised Azure Key Vault that aligns with ASB's security requirements.
+This module deploys a standardised Azure Key Vault that aligns with Contoso's security requirements.
 
 ## Navigation
 
@@ -178,7 +178,7 @@ module vaults './key-vault/vaults/main.bicep' = {
     }
     tags: {
       Environment: 'Non-Prod'
-      Role: 'ASBVML Deployment Validation'
+      Role: 'ContosoVML Deployment Validation'
     }
   }
 }
@@ -279,7 +279,7 @@ module vaults './key-vault/vaults/main.bicep' = {
     "tags": {
       "value": {
         "Environment": "Non-Prod",
-        "Role": "ASBVML Deployment Validation"
+        "Role": "ContosoVML Deployment Validation"
       }
     }
   }

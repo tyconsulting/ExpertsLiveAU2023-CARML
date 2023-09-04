@@ -1,0 +1,66 @@
+{
+  "analyzers": {
+    "core": {
+      "enabled": true,
+      "verbose": true,
+      "rules": {
+        "adminusername-should-not-be-literal": {
+          "level": "error"
+        },
+        "max-outputs": {
+          "level": "error"
+        },
+        "max-params": {
+          "level": "error"
+        },
+        "no-hardcoded-env-urls": {
+          "level": "warning"
+        },
+        "no-unnecessary-dependson": {
+          "level": "error"
+        },
+        "no-unused-params": {
+          "level": "warning"
+        },
+        "no-unused-vars": {
+          "level": "error"
+        },
+        "outputs-should-not-contain-secrets": {
+          "level": "error"
+        },
+        "prefer-interpolation": {
+          "level": "error"
+        },
+        "secure-parameter-default": {
+          "level": "error"
+        },
+        "simplify-interpolation": {
+          "level": "error"
+        },
+        "use-protectedsettings-for-commandtoexecute-secrets": {
+          "level": "error"
+        },
+        "use-stable-vm-image": {
+          "level": "error"
+        },
+        "explicit-values-for-loc-params": {
+          "level": "off"
+        }
+      }
+    }
+  },
+  "moduleAliases": {
+    "ts": {
+      "taoyang-ts-modules": {
+        "subscription": "a443bc8a-7305-4bb5-b895-80ee1e0698a6",
+        "resourceGroup": "rg-template-specs"
+      }
+    },
+    "br": {
+      "taoyang-br-modules": {
+        "registry": "acrtaobicepregistry.azurecr.io",
+        "modulePath": "bicep"
+      }
+    }
+  }
+}

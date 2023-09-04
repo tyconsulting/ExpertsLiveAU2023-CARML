@@ -71,8 +71,8 @@ resource peVnet 'microsoft.network/virtualNetworks@2022-07-01' existing = {
     name: privateEndpointSubnetName
   }
 }
-module standardKeyVault '../../../carml_modules/key-vault/vaults/main.bicep' = {
-  name: take('ASBKeyVault-${name}', 64)
+module standardKeyVault '../../../carml_modules/key-vault/vault/main.bicep' = {
+  name: take('ContosoKeyVault-${name}', 64)
   params: {
     name: name
     tags: mergedTags

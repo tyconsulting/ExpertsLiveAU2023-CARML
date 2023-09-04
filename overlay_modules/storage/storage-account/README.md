@@ -1,6 +1,6 @@
 # Overlay Bicep Module - Storage Account `[Microsoft.Storage/storageAccounts]`
 
-This module deploys a standardised Azure Storage Account that aligns with ASB's security requirements.
+This module deploys a standardised Azure Storage Account that aligns with Contoso's security requirements.
 
 ## Navigation
 
@@ -189,7 +189,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
       {
         enableNfsV3AllSquash: false
         enableNfsV3RootSquash: false
-        name: 'asbvmltest'
+        name: 'Contosovmltest'
         publicAccess: 'None'
         roleAssignments: [
           {
@@ -227,7 +227,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     systemAssignedIdentity: true
     tags: {
       Environment: 'Non-Prod'
-      Role: 'ASBVML Deployment Validation'
+      Role: 'ContosoVML Deployment Validation'
     }
     userAssignedIdentities: '<userAssignedIdentities>'
   }
@@ -265,7 +265,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
         {
           "enableNfsV3AllSquash": false,
           "enableNfsV3RootSquash": false,
-          "name": "asbvmltest",
+          "name": "Contosovmltest",
           "publicAccess": "None",
           "roleAssignments": [
             {
@@ -327,7 +327,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     "tags": {
       "value": {
         "Environment": "Non-Prod",
-        "Role": "ASBVML Deployment Validation"
+        "Role": "ContosoVML Deployment Validation"
       }
     },
     "userAssignedIdentities": {
@@ -367,7 +367,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     fileShares: [
       {
         accessTier: 'Hot'
-        name: 'asbvml1'
+        name: 'Contosovml1'
         roleAssignments: [
           {
             principalIds: [
@@ -381,7 +381,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
         shareQuota: 5120
       }
       {
-        name: 'asbvml2'
+        name: 'Contosovml2'
         shareQuota: 102400
       }
     ]
@@ -392,7 +392,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     systemAssignedIdentity: true
     tags: {
       Environment: 'Non-Prod'
-      Role: 'ASBVML Deployment Validation'
+      Role: 'ContosoVML Deployment Validation'
     }
     userAssignedIdentities: [
       '<managedIdentity1ResourceId>'
@@ -452,7 +452,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
       "value": [
         {
           "accessTier": "Hot",
-          "name": "asbvml1",
+          "name": "Contosovml1",
           "roleAssignments": [
             {
               "principalIds": [
@@ -466,7 +466,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
           "shareQuota": 5120
         },
         {
-          "name": "asbvml2",
+          "name": "Contosovml2",
           "shareQuota": 102400
         }
       ]
@@ -489,7 +489,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     "tags": {
       "value": {
         "Environment": "Non-Prod",
-        "Role": "ASBVML Deployment Validation"
+        "Role": "ContosoVML Deployment Validation"
       }
     },
     "userAssignedIdentities": {
@@ -549,7 +549,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     systemAssignedIdentity: true
     tags: {
       Environment: 'Non-Prod'
-      Role: 'ASBVML Deployment Validation'
+      Role: 'ContosoVML Deployment Validation'
     }
   }
 }
@@ -634,7 +634,7 @@ module storageAccounts './storage/storage-accounts/main.bicep' = {
     "tags": {
       "value": {
         "Environment": "Non-Prod",
-        "Role": "ASBVML Deployment Validation"
+        "Role": "ContosoVML Deployment Validation"
       }
     }
   }
