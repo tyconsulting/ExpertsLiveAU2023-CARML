@@ -5,6 +5,7 @@ param location string = 'australiaeast'
 
 @description('Tag values')
 param tags object = {}
+
 @description('Name of the Resource Group')
 param resourceGroupName string
 
@@ -17,29 +18,24 @@ param privateEndpointVirtualNetworkName string
 @description('Required. Existing Private Endpoint Subnet name.')
 param privateEndpointSubnetName string
 
+@description('Optional. Get current time stamp. This is used to generate unique name for key vault. DO NOT provide a value.')
+param now string = utcNow()
+
 // ---------- Storage Account Parameters ----------
 @description('Name of the Storage Account')
 param storageAccountName string
 
-@description('Conditional. Name of the blob Private Endpoint. Required if private endpoint for blob is required.')
-param blobPrivateEndpointName string = ''
-
-@description('Conditional. Name of the dfs Private Endpoint. Required if private endpoint for blob is required.')
-param dfsPrivateEndpointName string = ''
-
 // ---------- Key Vault Parameters ----------
-@description('Name of the Key Vault')
-param keyVaultName string
-
-@description('Conditional. Name of the blob Private Endpoint. Required if private endpoint for blob is required.')
-param keyVaultPrivateEndpointName string = ''
+@description('Prefix of the Key Vault name')
+param keyVaultNamePrefix string
 
 // ---------- Variables ----------
 var deploymentNameSuffix = last(split(deployment().name, '-'))
 
-var blobPeNicName = 'nic-${blobPrivateEndpointName}'
-var dfsPeNicName = 'nic-${dfsPrivateEndpointName}'
-
+var keyVaultNameSuffix = substring((uniqueString(now, location)), 0, 5)
+//This is required because soft delete and purge protection is enabled. You cannot re-use the same KV name after deletion until the purge protection period has passed.
+var keyVaultName1 = '${keyVaultNamePrefix}${keyVaultNameSuffix}01'
+var keyVaultName2 = '${keyVaultNamePrefix}${keyVaultNameSuffix}02'
 // ---------- Resource Groups ----------
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
@@ -48,25 +44,45 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   tags: tags
 }
 
-// ---------- Key Vault ----------
-module demoKeyVault 'br/taoyang-br-modules:key-vault:1.0.0' = {
-  name: take('Demo-kv-${deploymentNameSuffix}', 64)
+// ---------- Deploy Key Vault from local module ----------
+module keyVaultFromLocalModule '../../overlay_modules/key-vault/vault/main.bicep' = {
+  name: take('Demo-kv1-${deploymentNameSuffix}', 64)
   scope: rg
   params: {
     tags: tags
     location: location
-    name: keyVaultName
+    name: keyVaultName1
+    networkRuleSetBypass: 'AzureServices'
     enableVaultForDeployment: true
     enableVaultForTemplateDeployment: true
     privateEndpointVirtualNetworkResourceGroup: privateEndpointVirtualNetworkResourceGroup
     privateEndpointVirtualNetworkName: privateEndpointVirtualNetworkName
     privateEndpointSubnetName: privateEndpointSubnetName
-    privateEndpointName: keyVaultPrivateEndpointName
+    privateEndpointName: 'pe-${keyVaultName1}'
 
   }
 }
-// ---------- Storage Account ----------
-module demoStorage 'ts/taoyang-ts-modules:storage-account:1.0.0' = {
+
+// ---------- Deploy Key Vault from Bicep Registry ----------
+module keyVaultFromBR 'br/taoyang-br-modules:key-vault:1.0.0' = {
+  name: take('Demo-kv2-${deploymentNameSuffix}', 64)
+  scope: rg
+  params: {
+    tags: tags
+    location: location
+    name: keyVaultName2
+    networkRuleSetBypass: 'None'
+    enableVaultForDeployment: false
+    enableVaultForTemplateDeployment: false
+    privateEndpointVirtualNetworkResourceGroup: privateEndpointVirtualNetworkResourceGroup
+    privateEndpointVirtualNetworkName: privateEndpointVirtualNetworkName
+    privateEndpointSubnetName: privateEndpointSubnetName
+    privateEndpointName: 'pe-${keyVaultName2}'
+
+  }
+}
+// ---------- Deploy Storage Account using Template Specs----------
+module storageAccountFromTS 'ts/taoyang-ts-modules:storage-account:1.0.0' = {
   name: take('Demo-storage-${deploymentNameSuffix}', 64)
   scope: rg
   params: {
@@ -78,10 +94,10 @@ module demoStorage 'ts/taoyang-ts-modules:storage-account:1.0.0' = {
     skuName: 'Standard_LRS'
     enableHierarchicalNamespace: true
     supportsHttpsTrafficOnly: true
-    blobPrivateEndpointName: blobPrivateEndpointName
-    blobPrivateEndpointNicName: blobPeNicName
-    dfsPrivateEndpointName: dfsPrivateEndpointName
-    dfsPrivateEndpointNicName: dfsPeNicName
+    blobPrivateEndpointName: 'pe-${storageAccountName}-blob'
+    blobPrivateEndpointNicName: 'nic-pe-${storageAccountName}-blob'
+    dfsPrivateEndpointName: 'pe-${storageAccountName}-dfs'
+    dfsPrivateEndpointNicName: 'nic-pe-${storageAccountName}-dfs'
     privateEndpointVirtualNetworkResourceGroup: privateEndpointVirtualNetworkResourceGroup
     privateEndpointVirtualNetworkName: privateEndpointVirtualNetworkName
     privateEndpointSubnetName: privateEndpointSubnetName
@@ -90,10 +106,13 @@ module demoStorage 'ts/taoyang-ts-modules:storage-account:1.0.0' = {
 }
 
 // ---------- storage account Outputs ----------
-output storageAccountName string = demoStorage.outputs.name
-output storageAccountResourceId string = demoStorage.outputs.resourceId
-output storageAccountIdentityPrincipalId string = demoStorage.outputs.systemAssignedPrincipalId
+output storageAccountName string = storageAccountFromTS.outputs.name
+output storageAccountResourceId string = storageAccountFromTS.outputs.resourceId
+output storageAccountIdentityPrincipalId string = storageAccountFromTS.outputs.systemAssignedPrincipalId
 
 // ---------- key vault Outputs ----------
-output keyVaultName string = demoKeyVault.outputs.name
-output keyVaultResourceId string = demoKeyVault.outputs.resourceId
+output keyVaultName1 string = keyVaultFromLocalModule.outputs.name
+output keyVaultResourceId1 string = keyVaultFromLocalModule.outputs.resourceId
+
+output keyVaultName2 string = keyVaultFromBR.outputs.name
+output keyVaultResourceId2 string = keyVaultFromBR.outputs.resourceId

@@ -3,6 +3,6 @@
 ## Instruction
 
 ```powershell
-new-azdeployment -Location 'Australia East' -Name 'carml' -TemplateFile ./patterns/storage_account/main.bicep -TemplateParameterFile ./patterns/storage_account/main.parameters.json -Verbose
+new-azdeployment -Location 'Australia East' -Name 'carml' -TemplateFile ./patterns/demo/main.bicep -TemplateParameterFile ./patterns/demo/main.parameters.json -Verbose
 
 ``````

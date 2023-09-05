@@ -14,12 +14,6 @@
     "storageAccountName": {
       "value": "saaetaoelcarml01"
     },
-    "blobPrivateEndpointName": {
-      "value": "pe-saaetaoelcarml01-blob-01"
-    },
-    "dfsPrivateEndpointName": {
-      "value": "pe-saaetaoelcarml01-dfs-01"
-    },
     "privateEndpointVirtualNetworkResourceGroup": {
       "value": "rg-lz-corp-network-01"
     },
@@ -28,6 +22,9 @@
     },
     "privateEndpointSubnetName": {
       "value": "sn-private-endpoint"
+    },
+    "keyVaultNamePrefix": {
+      "value": "kv-taoelcarmo"
     }
   }
 }
