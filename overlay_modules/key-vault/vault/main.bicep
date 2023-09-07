@@ -95,6 +95,7 @@ module standardKeyVault '../../../carml_modules/key-vault/vault/main.bicep' = {
       {
         name: privateEndpointName
         service: 'vault'
+        location: location
         subnetResourceId: peVnet::peSubnet.id
         applicationSecurityGroups: !empty(privateEndpointAsgResourceIds) ? peAsgs : null
         customNetworkInterfaceName: privateEndpointNicName

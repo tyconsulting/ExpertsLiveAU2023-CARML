@@ -24,7 +24,7 @@
       "value": "sn-private-endpoint"
     },
     "keyVaultNamePrefix": {
-      "value": "kv-taoelcarmo"
+      "value": "kv-taoelcarml"
     }
   }
 }
