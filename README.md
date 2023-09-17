@@ -19,8 +19,7 @@ resources
 ### Get all Key Vaults deployed using Overlay module and show version
 
 ```kusto
-Resources
-Resources
+resources
 | where type =~ "microsoft.keyvault/vaults"
 | where tags['hidden-module_name'] =~ 'key-vault/vault'
 | project name, tags
