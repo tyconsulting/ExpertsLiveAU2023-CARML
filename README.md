@@ -20,6 +20,7 @@ resources
 
 ```kusto
 Resources
+Resources
 | where type =~ "microsoft.keyvault/vaults"
 | where tags['hidden-module_name'] =~ 'key-vault/vault'
 | project name, tags
@@ -28,4 +29,5 @@ Resources
 | extend tagValue = tostring(tags[tagKey])
 | distinct name, tagKey, tagValue
 | where tagKey =~ "hidden-module_version"
+| project KeyVaultName = name, OverlayModuleVersion = tagValue
 ```
