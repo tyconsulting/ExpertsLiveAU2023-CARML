@@ -1,0 +1,46 @@
+{
+  "name": "pol-restrict-prerelease-overlay-module-versions",
+  "properties": {
+    "displayName": "Restrict resources to be deployed using prerelease overlay module versions",
+    "description": "Prerelease module versions are published for testing purposes only. They are not intended for production use and they have not gone through code review and validation. This policy restricts resources from being deployed using prerelease overlay module versions.",
+    "metadata": {
+      "category": "Code Vulnerability",
+      "version": "1.0.0",
+      "preview": false,
+      "depreciated": false
+    },
+    "mode": "Indexed",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ],
+        "defaultValue": "Deny"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "tags[hidden-module_version]",
+            "exists": true
+          },
+          {
+            "field": "tags[hidden-module_version]",
+            "like": "*-prerelease"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]"
+      }
+    }
+  }
+}
