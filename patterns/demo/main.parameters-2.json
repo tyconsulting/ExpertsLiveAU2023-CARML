@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "tags": {
+      "value": {
+        "Env": "PRODUCTION",
+        "App": "CARML-Demo"
+      }
+    },
+    "resourceGroupName": {
+      "value": "rg-ae-el-carml-demo-02"
+    },
+    "storageAccountName": {
+      "value": "saaetaoelcarml02"
+    },
+    "privateEndpointVirtualNetworkResourceGroup": {
+      "value": "rg-lz-corp-network-01"
+    },
+    "privateEndpointVirtualNetworkName": {
+      "value": "vnet-ae-lz-corp-network-01"
+    },
+    "privateEndpointSubnetName": {
+      "value": "sn-private-endpoint"
+    },
+    "keyVaultNamePrefix": {
+      "value": "kv-taoelcarml"
+    }
+  }
+}
